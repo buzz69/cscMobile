@@ -158,7 +158,7 @@
 							onlineCnt=0;
 							offlineCnt=0;
 							for(var key in tabCameras){
-								if(tabCameras[key].checkOnline()=='online'){
+								if(tabCameras[key].getOnlineStatus()=='online'){
 									onlineTab[onlineCnt]=key;
 									onlineCnt++;
 								}else{

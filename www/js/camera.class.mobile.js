@@ -58,6 +58,19 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 	var Conline='offline';
 	this.Conline=Conline;
 	
+	$.ajax({
+		type       : "GET",
+		url        : "http://www.cloudsecuritycam.com/csc/mobileapp/ajax.php",
+		contentType: "application/json;charset=iso859-15",  
+		dataType   : 'jsonp', 
+		async	   : false,
+		data       : {action: 'CHECK_ONLINE' , id: Cid },
+		success    : function(rep) {
+			Conline=rep.status;
+			this.Conline=rep.status;
+		}
+	});
+	
 	//CREATION DE LA CAMERA DANS LA LISTE
 		this.create = function(container) {
 					ConlineTxt='<font style="color:#E55">offline</font>';
