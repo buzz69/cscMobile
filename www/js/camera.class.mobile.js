@@ -82,7 +82,7 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 			CfunctionTxt='<font style="color:#AAA">Désactivé</font>';
 			if(Cfunction=='monitor'){ CfunctionTxt='<font style="color:#000">Activé</font>'; }
 			if(Cfunction=='modect'){ CfunctionTxt='<font style="color:#55E">Détection de mouvements</font>'; }
-			html='<li data-icon="false"><a href="#" onclick="'+action+'return false;"><img width=80 height=80 src="../'+Cdevicepicture+'"/><h3>'+Cname+'</h3><p>'+CfunctionTxt+'</p><p class="ui-li-aside"><strong>'+ConlineTxt+'</strong></p></a></li>';
+			html='<li data-icon="false"><a href="#" onclick="'+action+'return false;"><img width=80 height=80 src="'+Cdevicepicture+'"/><h3>'+Cname+'</h3><p>'+CfunctionTxt+'</p><p class="ui-li-aside"><strong>'+ConlineTxt+'</strong></p></a></li>';
 			$('#'+container).append(html).listview('refresh');
 		}
 	
