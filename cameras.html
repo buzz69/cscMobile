@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head> 
+	<meta charset="ISO-8859-15">
+    <meta name="format-detection" content="telephone=no" />
+	<title>CloudSecurityCam</title> 
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<link rel="stylesheet" href="jquery.mobile-1.2.0.css" />
+	<link type="text/css" href="css.css" rel="stylesheet" />
+	<script src="jquery-1.7.1.min.js"></script>
+	<script src="camera.class.mobile.js"></script>
+	<script src="jquery.mobile-1.2.0.min.js"></script>
+	<script type="text/javascript" src="js.js"></script>
+	<script type="text/javascript" src="toast.js"></script>
+</head> 
+<body> 
+
+<div data-role="page" id="camlistPage">
+
+	<div data-role="header">
+		<h1>Cameras</h1>
+		<a href="#" onclick="logout();return false;" data-icon="delete" data-iconpos="left" data-direction="reverse">Logout</a>
+	</div><!-- /header -->
+
+	<div data-role="content" >
+		<div data-role="collapsible" data-theme="b" data-content-theme="c" data-collapsed="false">
+			<h2>Caméras en ligne</h2>
+			<ul data-role="listview" data-inset="true" id="camerasListe" >
+
+			</ul>
+		</div>
+		
+		<div data-role="collapsible" data-theme="b" data-content-theme="c">
+			<h2>Caméras hors ligne</h2>
+			<ul data-role="listview" data-inset="true" id="camerasListe2" >
+
+			</ul>
+		</div>
+		
+	</div><!-- /content -->
+	<br><br>
+	<div id="statusdiv" data-role="toast"></div>
+	
+</div><!-- /page -->
+
+</body>
+</html>

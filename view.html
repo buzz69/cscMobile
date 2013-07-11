@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head> 
+	<meta charset="ISO-8859-15">
+    <meta name="format-detection" content="telephone=no" />
+	<title>CloudSecurityCam</title> 
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<link rel="stylesheet" href="jquery.mobile-1.2.0.css" />
+	<link type="text/css" href="css.css" rel="stylesheet" />
+	<script src="jquery-1.7.1.min.js"></script>
+	<script src="camera.class.mobile.js"></script>
+	<script src="jquery.mobile-1.2.0.min.js"></script>
+	<script type="text/javascript" src="js.js"></script>
+	<script type="text/javascript" src="toast.js"></script>
+</head> 
+<body> 
+
+<div data-role="page" id="viewPage" style="background:#000 !important" class="ui-responsive-panel">
+	
+	<div id="panel">
+		
+	</div>
+	
+	<div data-role="header">
+		<a href="index.html" data-icon="arrow-l" data-iconpos="left" data-direction="reverse">Back</a>
+		<h1><div id="camName"></div></h1>
+		<a href="#" onclick="tooglePanel();return false;" data-icon="gear" data-iconpos="left" >options</a>
+	</div>
+	
+	<div data-role="content" id="contentbody">
+		<center><img src="" id="fullview"/></center>
+	</div>
+	
+</div>
+
+	
+</body>
+</html>
