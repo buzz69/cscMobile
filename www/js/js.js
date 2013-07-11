@@ -153,26 +153,26 @@
 						}
 						nbCameras=cnt;
 						//on tri les actif et les non actifs
-							onlineTab=new Array();
-							offlineTab=new Array();
-							onlineCnt=0;
-							offlineCnt=0;
+							enableTab=new Array();
+							disableTab=new Array();
+							enableCnt=0;
+							disableCnt=0;
 							for(var key in tabCameras){
-								if(tabCameras[key].getOnlineStatus()=='online'){
-									onlineTab[onlineCnt]=key;
-									onlineCnt++;
+								if(tabCameras[key].getFunction()=='disable'){
+									disableTab[disableCnt]=key;
+									disableCnt++;
 								}else{
-									offlineTab[offlineCnt]=key;
-									offlineCnt++;
+									enableTab[enableCnt]=key;
+									enableCnt++;
 								}
 								//console.log('Camera id: '+key+' - '+tabCameras[key].getOnlineStatus());
 							}
 						//on lance l'affichage des cameras
-							for(var key in onlineTab){
-								tabCameras[onlineTab[key]].create('camerasListe');
+							for(var key in enableTab){
+								tabCameras[enableTab[key]].create('camerasListe');
 							}
-							for(var key in offlineTab){
-								tabCameras[offlineTab[key]].create('camerasListe2');
+							for(var key in disableTab){
+								tabCameras[disableTab[key]].create('camerasListe2');
 							}
 						//
 						if(nbCameras==0){

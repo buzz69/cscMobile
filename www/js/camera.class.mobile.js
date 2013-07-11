@@ -58,21 +58,19 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 	var Conline='offline';
 	this.Conline=Conline;
 	
-	$.ajax({
-		type       : "GET",
-		url        : "http://www.cloudsecuritycam.com/csc/mobileapp/ajax.php",
-		contentType: "application/json;charset=iso859-15",  
-		dataType   : 'jsonp', 
-		async	   : false,
-		data       : {action: 'CHECK_ONLINE' , id: Cid },
-		success    : function(rep) {
-			Conline=rep.status;
-			this.Conline=rep.status;
-		}
-	});
-	
 	//CREATION DE LA CAMERA DANS LA LISTE
 		this.create = function(container) {
+			$.ajax({
+				type       : "GET",
+				url        : "http://www.cloudsecuritycam.com/csc/mobileapp/ajax.php",
+				contentType: "application/json;charset=iso859-15",  
+				dataType   : 'jsonp', 
+				async	   : false,
+				data       : {action: 'CHECK_ONLINE' , id: Cid },
+				success    : function(rep) {
+					Conline=rep.status;
+					this.Conline=rep.status;
+					//
 					ConlineTxt='<font style="color:#E55">offline</font>';
 					action='';
 					if(Conline=='online'){
@@ -84,6 +82,8 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 					if(Cfunction=='modect'){ CfunctionTxt='<font style="color:#55E">Détection de mouvements</font>'; }
 					html='<li data-icon="false"><a href="#" onclick="'+action+'return false;"><img width=80 height=80 src="'+Cdevicepicture+'"/><h3>'+Cname+'</h3><p>'+CfunctionTxt+'</p><p class="ui-li-aside"><strong>'+ConlineTxt+'</strong></p></a></li>';
 					$('#'+container).append(html).listview('refresh');
+				}
+			});
 	}
 	
 	//DESTRUCTION
@@ -1243,6 +1243,9 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 					}
 				}
 			});
+		}
+		this.getFunction = function(){
+			return Cfunction;
 		}
 	
 	//RELOAD
