@@ -311,7 +311,7 @@
 		});
 		function motion(urlIMG){
 			randomNum=Date.now();
-			tmpUrl=urlIMG+'?time='+randomNum;
+			tmpUrl=urlIMG+'&time='+randomNum;
 			tmpIMG=new Image();
 			tmpIMG.src=tmpUrl;
 			tmpIMG.onload = function(){
