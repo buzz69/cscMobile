@@ -136,6 +136,7 @@
 							Chost=rep.camera[i]['host'];
 							Cport=rep.camera[i]['port'];
 							Cpath=rep.camera[i]['path'];
+							Cpath2=rep.camera[i]['path2'];
 							Clogin=rep.camera[i]['login'];
 							Cpassword=rep.camera[i]['password'];
 							Ccontroldevice=rep.camera[i]['controldevice'];
@@ -148,7 +149,7 @@
 							//on incremente le compteur
 								cnt++;
 							//on creer l'objet
-								tabCameras[Cid]=new Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Ccontroldevice,Cdevicepicture,Cwidth,Cheight,Chost,Cport,Cpath,Cpreset,Cevents,CalertesSupport,CalertesPlaning);
+								tabCameras[Cid]=new Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Ccontroldevice,Cdevicepicture,Cwidth,Cheight,Chost,Cport,Cpath,Cpath2,Cpreset,Cevents,CalertesSupport,CalertesPlaning);
 								//alert('Camera: '+Cname+' créé');
 						}
 						nbCameras=cnt;
@@ -287,6 +288,8 @@
             wheight = $(window).height();
 			changepush();
 			checkScreen();
+			motion(currentCamera['link']);
+			showPanel();
 		});
 		
 		$( '#viewPage' ).live( 'pagecreate',function(event){
@@ -299,6 +302,17 @@
 				tooglePanel();
 			}
 		});
+		function motion(urlIMG){
+			randomNum=Date.now();
+			tmpUrl=urlIMG+'?time='+randomNum;
+			tmpIMG=new Image();
+			tmpIMG.src=tmpUrl;
+			tmpIMG.onload = function(){
+				$('#fullview').attr('src',tmpUrl);
+				//setTimeout("motion()",500);
+				motion(urlIMG);
+			}
+		}
 		
 		//LOGIN PAGE
 		$( '#loginPage' ).live( 'pageshow',function(event){
@@ -398,7 +412,8 @@
 			return dumped_text;
 		}
 
-
+		
+		
 		// SWIPEUP/DOWN
 	(function() {
 // initializes touch and scroll events

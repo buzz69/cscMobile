@@ -412,6 +412,7 @@ if($action=='LOAD_CAMERAS'){
 			$planingAlertes5=$infoCam['alertesPlan5'];
 			$planingAlertes6=$infoCam['alertesPlan6'];
 			$controldevice='perso.php';
+			$path2='';
 			
 			if($preset!=0){
 				$table2='presets';
@@ -419,6 +420,7 @@ if($action=='LOAD_CAMERAS'){
 				$presetSQL=mysql_query($sql2);
 				$infosPreset=mysql_fetch_array($presetSQL);
 				$path=$infosPreset['path'];
+				$path2=$infosPreset['path2'];
 				$width=$infosPreset['width'];
 				$height=$infosPreset['height'];
 				$controldevice=$infosPreset['controldevice'];
@@ -440,6 +442,7 @@ if($action=='LOAD_CAMERAS'){
 				$output['camera'][$x]['host']=$host;
 				$output['camera'][$x]['port']=$port;
 				$output['camera'][$x]['path']=$path;
+				$output['camera'][$x]['path2']=$path2;
 				$output['camera'][$x]['login']=$login;
 				$output['camera'][$x]['password']=$password;
 				$output['camera'][$x]['alertesSupport']=$alertesSupport;

@@ -1,7 +1,7 @@
 var FOSCAM_8918W_CONTROL_ID=1;
 var FOSCAM_9821W_CONTROL_ID=2;
 var VIVOTEK_IP8332_CONTROL_ID=4;
-function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Ccontroldevice,Cdevicepicture,Cwidth,Cheight,Chost,Cport,Cpath,Cpreset,Nbevents,CalertesSupport,CalertesPlaning) {
+function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Ccontroldevice,Cdevicepicture,Cwidth,Cheight,Chost,Cport,Cpath,Cpath2,Cpreset,Nbevents,CalertesSupport,CalertesPlaning) {
 	var Cid=Cid;
 	var Cname=Cname;
 	var Cfunction=Cfunction;
@@ -15,13 +15,15 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 	var Chost=Chost;
 	var Cport=Cport;
 	var Cpath=Cpath;
+	var Cpath2=Cpath2;
 	var Clogin=Clogin;
 	var Cpassword=Cpassword;
 	var Cevents=Nbevents;
 	var CeventsTab=null;
 	var CalertesSupport=CalertesSupport;
 	var CalertesPlaning=CalertesPlaning;
-	var Cfullpath=Cpath.replace('%HOST%',Chost);
+	//var Cfullpath=Cpath.replace('%HOST%',Chost);
+	var Cfullpath=Cpath2.replace('%HOST%',Chost);
 	Cfullpath=Cfullpath.replace('%PORT%',Cport);
 	if(Cpath.indexOf('%USR%')!=-1){
 		Cfullpath=Cfullpath.replace('%USR%',Clogin);
@@ -43,6 +45,7 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 	this.Chost=Chost;
 	this.Cport=Cport;
 	this.Cpath=Cpath;
+	this.Cpath2=Cpath2;
 	this.Clogin=Clogin;
 	this.Cpassword=Cpassword;
 	this.Cevents=Nbevents;
@@ -1265,7 +1268,7 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 		this.control = function(cmd){
 			$.ajax({
 				type       : "GET",
-				url        : "http://www.cloudsecuritycam.com/csc/mobileapp/controls/"+Ccontroldevice+".php",
+				url        : "http://www.cloudsecuritycam.com/csc/mobileapp/www/controls/"+Ccontroldevice+".php",
 				contentType: "application/json;charset=iso859-15",  
 				dataType   : 'jsonp',  
 				data       : {action: 'CONTROL', cmd: cmd, host: Chost, port: Cport, login: Clogin, pwd: Cpassword  },
