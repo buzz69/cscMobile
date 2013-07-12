@@ -325,8 +325,11 @@
 		$( '#loginPage' ).live( 'pageshow',function(event){
 			var value1 = window.localStorage.getItem("CSC-LOGIN");
 			var value2 = window.localStorage.getItem("CSC-PWD");
-			alert(value1+' , '+value2);
-			
+			//alert(value1+' , '+value2);
+			if(value1){
+				$('#username').val(value1);
+				$('#password').val(value2);
+			}
 			$('#loginForm').submit(function() {
 				//$('#output').html('Connecting....');
 				//$('#output').toast('show');
