@@ -282,7 +282,7 @@
 		
 		//CAMERAS PAGE
 		$( '#camlistPage' ).live( 'pageshow',function(event){
-			window.stop();
+			//window.stop();
 			getUserInfos();
 			loadCameras();
 		});
