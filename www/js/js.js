@@ -3,6 +3,13 @@
 				$.mobile.allowCrossDomainPages = true;
 				$.mobile.defaultPageTransition = "slide";
 				$.event.special.tap.tapholdThreshold=100;
+				    document.addEventListener("backbutton", function() {
+						if ( $('.ui-page-active').attr('id') == 'camlistPage') {
+							exitAppPopup();
+						} else {
+							location.href='cameras.html';          
+						}
+					}, false);
 		});
 		
 		var mobile=true;
