@@ -323,6 +323,10 @@
 		
 		//LOGIN PAGE
 		$( '#loginPage' ).live( 'pageshow',function(event){
+			var value1 = window.localStorage.getItem("CSC-LOGIN");
+			var value2 = window.localStorage.getItem("CSC-PWD");
+			alert(value1+' , '+value2);
+			
 			$('#loginForm').submit(function() {
 				//$('#output').html('Connecting....');
 				//$('#output').toast('show');
@@ -334,6 +338,8 @@
 							data       : {action: 'LOGIN', login: escape($('#username').val()), password: escape($('#password').val())},
 							success    : function(response) {
 								if(response.result=='OK'){
+									window.localStorage.setItem("CSC-LOGIN", $('#username').val());
+									window.localStorage.setItem("CSC-PWD", $('#password').val());
 									$('#output').html('Connexion réussie !');
 									$('#output').toast('show');
 									setTimeout('$.mobile.changePage( "cameras.html", { transition: "slideup"} );',1000);
