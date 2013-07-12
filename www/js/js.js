@@ -412,15 +412,9 @@
 			return dumped_text;
 		}
 
-		document.addEventListener("backbutton", function(e){
-			//if($.mobile.activePage.is('#loginPage')){
-				e.preventDefault();
-				navigator.app.exitApp();
-			//}
-			//else {
-			//	navigator.app.backHistory();
-			//}
-		}, false);
+		function closeApp(){
+			navigator.app.exitApp();
+		};
 		
 		// SWIPEUP/DOWN
 	(function() {
