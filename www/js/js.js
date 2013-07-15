@@ -12,6 +12,8 @@
 					}, false);
 		});
 		
+		var play='off';
+		
 		var mobile=true;
 		var userTab=new Array();
 		var tabCameras=new Array();
@@ -121,7 +123,8 @@
 		}
 		function loadCameras(){
 			//showLoader('Récupération des caméras...');
-			$('#camerasListe').html('');
+			$('#camerasListe').empty().listview("refresh");
+			$('#camerasListe2').empty().listview("refresh");
 			$.ajax({
 				type       : "GET",
 				url        : "http://www.cloudsecuritycam.com/csc/mobileapp/ajax.php",
@@ -283,6 +286,8 @@
 		//CAMERAS PAGE
 		$( '#camlistPage' ).live( 'pageshow',function(event){
 			//window.stop();
+			play="off";
+			currentCamera=new Array();
 			getUserInfos();
 			loadCameras();
 		});
@@ -295,6 +300,7 @@
             wheight = $(window).height();
 			changepush();
 			checkScreen();
+			play='on';
 			motion(currentCamera['link']);
 			showPanel();
 		});
@@ -309,18 +315,17 @@
 				tooglePanel();
 			}
 		});
-		function motion(urlIMG){
-			randomNum=Date.now();
-			tmpUrl=urlIMG+'&time='+randomNum;
-			tmpIMG=new Image();
-			tmpIMG.src=tmpUrl;
-			tmpIMG.onload = function(){
-				$('#fullview').attr('src',tmpUrl);
-				//setTimeout("motion("+urlIMG+")",500);
-				motion(urlIMG);
-			}
-			tmpIMG.onerror = function(){
-				motion(urlIMG);
+		function motion(flux){
+			if(play=="on"){
+				randomNum=Date.now();
+				tmpUrl=flux+'&time='+randomNum;
+				tmpIMG=new Image();
+				tmpIMG.src=tmpUrl;
+				tmpIMG.onload = function(){
+					$('#fullview').attr('src',tmpUrl);
+					setTimeout("motion('"+flux+"')",1000);
+					//motion();
+				}
 			}
 		}
 		
