@@ -123,7 +123,7 @@
 		}
 		function loadCameras(){
 			//showLoader('Récupération des caméras...');
-			//$('#footerDiv').addClass("blink");
+			$('#footerDiv').addClass("blink");
 			$('#footerDiv').html('<br><center><table><tr><td align=center valign=center width=35><img src="glyphish-icons/55-network.png"></img></td><td align=center valign=center><div id="footerTxt">Chargement en cours...</div></td></tr></table></center></br>');
 			$('#camerasListe').empty().listview("refresh");
 			$('#camerasListe2').empty().listview("refresh");
@@ -134,6 +134,8 @@
 				dataType   : 'jsonp',  
 				data       : {action: 'LOAD_CAMERAS'},
 				success    : function(rep) {
+					$('#footerDiv').html('<br><center><table><tr><td align=center valign=center width=35><img src="glyphish-icons/01-refresh.png"></img></td><td align=center valign=center><div id="footerTxt">Rafraichir la liste</div></td></tr></table></center></br>');
+					$('#footerDiv').removeClass("blink");
 					if(rep.status=='ERROR'){
 						alert('Status: '+rep.status+"\nMessage: "+rep.errorMsg);
 					}else{
@@ -191,8 +193,6 @@
 						if(nbCameras==0){
 							$('#camerasListe').html('<center>Aucune caméras');
 						}
-						$('#footerDiv').html('<br><center><table><tr><td align=center valign=center width=35><img src="glyphish-icons/01-refresh.png"></img></td><td align=center valign=center><div id="footerTxt">Rafraichir la liste</div></td></tr></table></center></br>');
-						//$('#footerDiv').removeClass("blink");
 					}
 				}
 			});
