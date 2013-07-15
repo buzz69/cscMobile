@@ -316,8 +316,8 @@
 			tmpIMG.src=tmpUrl;
 			tmpIMG.onload = function(){
 				$('#fullview').attr('src',tmpUrl);
-				//setTimeout("motion()",500);
-				motion(urlIMG);
+				setTimeout("motion("+urlIMG+")",500);
+				//motion(urlIMG);
 			}
 		}
 		
