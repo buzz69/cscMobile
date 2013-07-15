@@ -290,6 +290,7 @@
 		//CAMERAS PAGE
 		$( '#camlistPage' ).live( 'pageshow',function(event){
 			console.log("camlistPage - stop flux - getuserinfos - loadcameras");
+			$('#footerDiv').removeClass("blink");
 			window.stop();
 			play="off";
 			currentCamera=new Array();
