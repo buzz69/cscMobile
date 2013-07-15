@@ -319,11 +319,11 @@
 		$( '#viewPage' ).live( 'pagecreate',function(event){
 		  tabCameras[currentCamera['id']].getPanel('panel');
 		  //
-			$( "#viewPage" ).on( 'swiperight', swipeHandler );
+			$( "#viewPage" ).on( 'swiperight', swiperightHandler );
 			// Callback 
-			function swipeHandler( event ) {
+			function swiperightHandler( event ) {
 				console.log('Swipe = back');
-				$.mobile.changePage( "cameras.html", { transition: "slide"} );
+				$.mobile.changePage( "cameras.html", { transition: "slide", reverse: true} );
 			}
 		  //PANEL
 			$( "#panel" ).on( 'swipedown', swipedownHandler );
