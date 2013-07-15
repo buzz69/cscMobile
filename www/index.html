@@ -4,7 +4,7 @@
 	<meta charset="ISO-8859-15">
     <meta name="format-detection" content="telephone=no" />
 	<title>CloudSecurityCam</title> 
-	<meta name="viewport" content="user-scalable=no, initial-scale=1.1, maximum-scale=1.1, minimum-scale=1.1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<link rel="stylesheet" href="css/jquery.mobile-1.2.0.css" />
 	<link type="text/css" href="css/css.css" rel="stylesheet" />
@@ -19,11 +19,12 @@
 <div data-role="page" id="loginPage">
 	<div data-role="content" data-inset="true">
     <center>
-       <fieldset style="width:70%">
+       
+	   <fieldset style="width:70%">
        <p>
 		  <form id="loginForm">
 			<ul id="list_todo" data-role="listview" data-inset="true" data-theme="c">
-				<li><center><h3>CloudSecurityCam</h3></center></li>
+				<li><center><h3>Identification</h3></center></li>
 				<li><input type="email" name="username" id="username" value="" placeholder="Email" /></li>
 				<li><input type="password" name="password" id="password" value="" placeholder="Password"/></li>
 				<li><br><input id="Submit1" type="submit" value="Login" data-role="button" data-inline="true" data-theme="b" /></li>
@@ -31,6 +32,11 @@
 		  </form>
 		</p>
 		</fieldset>
+		<div id="loginstate" class="blink">
+			<p id="loginLOAD" class="login connect">Connexion en cours...</p>
+            <p id="loginBAD" class="login failed">Erreur de connexion !</p>
+            <p id="loginOK" class="login success">Connecté !</p>
+        </div>
 		<div id="output" data-role="toast"></div>
 	</div>
 	</center>

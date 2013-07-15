@@ -123,6 +123,8 @@
 		}
 		function loadCameras(){
 			//showLoader('Récupération des caméras...');
+			$('#footerDiv').addClass("blink");
+			$('#footerDiv').html('<br><center><table><tr><td align=center valign=center width=35><img src="glyphish-icons/55-network.png"></img></td><td align=center valign=center><div id="footerTxt">Chargement en cours...</div></td></tr></table></center></br>');
 			$('#camerasListe').empty().listview("refresh");
 			$('#camerasListe2').empty().listview("refresh");
 			$.ajax({
@@ -189,6 +191,8 @@
 						if(nbCameras==0){
 							$('#camerasListe').html('<center>Aucune caméras');
 						}
+						$('#footerDiv').html('<br><center><table><tr><td align=center valign=center width=35><img src="glyphish-icons/01-refresh.png"></img></td><td align=center valign=center><div id="footerTxt">Rafraichir la liste</div></td></tr></table></center></br>');
+						$('#footerDiv').removeClass("blink");
 					}
 				}
 			});
@@ -285,16 +289,22 @@
 		
 		//CAMERAS PAGE
 		$( '#camlistPage' ).live( 'pageshow',function(event){
-			//window.stop();
+			console.log("camlistPage - stop flux - getuserinfos - loadcameras");
+			window.stop();
 			play="off";
 			currentCamera=new Array();
 			getUserInfos();
 			loadCameras();
 		});
+		function refreshCamerasListe(){
+			getUserInfos();
+			loadCameras();
+		}
 		
 		//VIEW PAGE
 		$( '#viewPage' ).live( 'pageshow',function(event){
 			//alert(currentCamera['link']);
+			console.log("viewPage - start flux - showpanel");
 			$('#fullview').attr('src',currentCamera['link']);
 			$('#camName').html(currentCamera['name'].toUpperCase());
             wheight = $(window).height();
@@ -321,11 +331,21 @@
 				tmpUrl=flux+'&time='+randomNum;
 				tmpIMG=new Image();
 				tmpIMG.src=tmpUrl;
-				tmpIMG.onload = function(){
-					$('#fullview').attr('src',tmpUrl);
-					setTimeout("motion('"+flux+"')",1000);
-					//motion();
-				}
+				console.log("load image: ("+flux+")");
+				tmpIMG.onload= function(){
+					console.log("image loaded: ("+tmpIMG.src+")");
+					if(play=="on"){
+						$('#fullview').attr('src',tmpUrl);
+						setTimeout("motion('"+flux+"')",1000);
+						//motion();
+					}
+				};
+				tmpIMG.onerror=function(){
+					console.log("load error: ("+tmpIMG.src+")");
+					if(play=="on"){
+						setTimeout("motion('"+flux+"')",1000);
+					}
+				};
 			}
 		}
 		
@@ -339,7 +359,9 @@
 				$('#password').val(value2);
 			}
 			$('#loginForm').submit(function() {
-				//$('#output').html('Connecting....');
+				$('#loginOK').hide();
+				$('#loginBAD').hide();
+				$('#loginLOAD').show();
 				//$('#output').toast('show');
 						$.ajax({
 							type       : "GET",
@@ -348,15 +370,18 @@
 							dataType   : 'jsonp',  
 							data       : {action: 'LOGIN', login: escape($('#username').val()), password: escape($('#password').val())},
 							success    : function(response) {
+								$('#loginLOAD').hide();
 								if(response.result=='OK'){
+									$('#loginOK').show();
 									window.localStorage.setItem("CSC-LOGIN", $('#username').val());
 									window.localStorage.setItem("CSC-PWD", $('#password').val());
-									$('#output').html('Connexion réussie !');
-									$('#output').toast('show');
+									//$('#output').html('Connexion réussie !');
+									//$('#output').toast('show');
 									setTimeout('$.mobile.changePage( "cameras.html", { transition: "slideup"} );',1000);
 								}else{
-									$('#output').html('Connexion échouée !');
-									$('#output').toast('show');
+									//$('#output').html('Connexion échouée !');
+									//$('#output').toast('show');
+									$('#loginBAD').show();
 								}
 							},
 							error      : function() {
