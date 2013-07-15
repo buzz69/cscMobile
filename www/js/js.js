@@ -134,7 +134,7 @@
 				dataType   : 'jsonp',  
 				data       : {action: 'LOAD_CAMERAS'},
 				success    : function(rep) {
-					$('#footerDiv').html('<br><center><table><tr><td align=center valign=center width=35><img src="glyphish-icons/01-refresh.png"></img></td><td align=center valign=center><div id="footerTxt">Rafraichir la liste</div></td></tr></table></center></br>');
+					setTimeout('$(\'#footerDiv\').html(\'<br><center><table><tr><td align=center valign=center width=35><img src="glyphish-icons/01-refresh.png"></img></td><td align=center valign=center><div id="footerTxt">Rafraichir la liste</div></td></tr></table></center></br>\');',500);
 					//$('#footerDiv').removeClass("blink");
 					if(rep.status=='ERROR'){
 						alert('Status: '+rep.status+"\nMessage: "+rep.errorMsg);
