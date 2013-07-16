@@ -13,6 +13,7 @@
 		});
 		
 		var play='off';
+		var ctx=null;
 		
 		var mobile=true;
 		var userTab=new Array();
@@ -235,19 +236,16 @@
 			$.mobile.loading( 'hide' );
 		}
 		function checkScreen(){
+			return false;
 			if($(window).width()<$(window).height()){
 				//portrait
 				//$("#viewport").attr("content","width=device-width; initial-scale=0.7; maximum-scale=1.0; user-scalable=yes;");
 				$('#fullview').css('width','100%');
 				$('#fullview').css('height','auto');
-				//$('#popupPanel').css('height','auto');
-				//$('#popupPanel').css('width','100%');
 			}else{
 				//paysage
 				$('#fullview').css('height',$(window).height()-80);
 				$('#fullview').css('width','auto');
-				//$('#popupPanel').css('height',wheight-2);
-				//$('#popupPanel').css('width',300);
 			}
 		}
 		function clearMenu(){
@@ -306,17 +304,18 @@
 		$( '#viewPage' ).live( 'pageshow',function(event){
 			//alert(currentCamera['link']);
 			console.log("viewPage - start flux - showpanel");
-			$('#fullview').attr('src',currentCamera['link']);
+			//$('#fullview').attr('src',currentCamera['link']);
 			$('#camName').html(currentCamera['name'].toUpperCase());
             wheight = $(window).height();
 			changepush();
-			checkScreen();
+			//checkScreen();
 			play='on';
 			motion(currentCamera['link']);
 			showPanel();
 		});
 		
 		$( '#viewPage' ).live( 'pagecreate',function(event){
+		  ctx = document.getElementById('fullview').getContext('2d');
 		  tabCameras[currentCamera['id']].getPanel('panel');
 		  //
 			$( "#viewPage" ).on( 'swiperight', swiperightHandler );
@@ -343,7 +342,13 @@
 				tmpIMG.onload= function(){
 					console.log("image loaded: ("+tmpIMG.src+")");
 					if(play=="on"){
-						$('#fullview').attr('src',tmpUrl);
+						ratio=this.width/this.height;
+						largeur=$('#fullview').width();
+						hauteur=Math.ceil($('#fullview').width()/ratio);
+						$('#fullview').attr('height',hauteur);
+						//$('#fullview').attr('src',tmpUrl);
+						console.log('source: '+this.width+'x'+this.height+' - destination: '+largeur+'x'+hauteur);
+						ctx.drawImage(tmpIMG, 0, 0, this.width, this.height, 0, 0, largeur, hauteur);
 						setTimeout("motion('"+flux+"')",1000);
 						//motion();
 					}
