@@ -497,7 +497,13 @@
 		}
 
 		function exitApp(){
-			navigator.device.exitApp();
+			if(navigator.app){
+				console.log('navigator.app.exitApp');
+      			navigator.app.exitApp();
+			}else if(navigator.device){
+				console.log('navigator.device.exitApp');
+    		    navigator.device.exitApp();
+			}
 		};
 		
 		// SWIPEUP/DOWN
