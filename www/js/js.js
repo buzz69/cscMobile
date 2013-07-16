@@ -5,7 +5,9 @@
 				$.event.special.tap.tapholdThreshold=100;
 		});
 		
-		document.addEventListener("deviceready", onDeviceReady, false);
+		function onLoad(){
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
 		
 		function onDeviceReady() {
 			// Register the event listener
@@ -476,7 +478,7 @@
 		}
 
 		function exitApp(){
-			device.exitApp();
+			navigator.device.exitApp();
 		};
 		
 		// SWIPEUP/DOWN
