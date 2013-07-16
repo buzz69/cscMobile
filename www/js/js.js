@@ -475,8 +475,8 @@
 			return dumped_text;
 		}
 
-		function closeApp(){
-			navigator.app.exitApp();
+		function exitApp(){
+			device.exitApp();
 		};
 		
 		// SWIPEUP/DOWN
