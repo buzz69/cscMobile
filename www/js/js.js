@@ -25,12 +25,8 @@
 		
 		function onConfirm(buttonIndex) {
    		     if(buttonIndex==1){
-				txt='OUI';
+				exitAPP();
 			 }
-			 if(buttonIndex==2){
-				txt='NON';
-			 }
-			 alert('Bouton: ' + txt);
   		}
 		
 		var play='off';
@@ -496,7 +492,7 @@
 			return dumped_text;
 		}
 
-		function exitApp(){
+		function exitAPP(){
 			if(navigator.app){
 				console.log('navigator.app.exitApp');
       			navigator.app.exitApp();
