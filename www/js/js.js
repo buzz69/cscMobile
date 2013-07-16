@@ -11,8 +11,27 @@
 		
 		function onDeviceReady() {
 			// Register the event listener
-			document.addEventListener("backbutton", function() { alert('EXIT');	}, false);
+			document.addEventListener("backbutton", function() { showConfirm();	}, false);
 		}
+		
+		function showConfirm() {
+      	  navigator.notification.confirm(
+            "Fermer l'application ?",  // message
+            onConfirm,              // callback to invoke with index of button pressed
+            'CloudSecurityCam',            // title
+            'Oui,Non'          // buttonLabels
+     	   );
+   		 }
+		
+		function onConfirm(buttonIndex) {
+   		     if(buttonIndex==1){
+				txt='OUI';
+			 }
+			 if(buttonIndex==2){
+				txt='NON';
+			 }
+			 alert('Bouton: ' + txt);
+  		}
 		
 		var play='off';
 		var ctx=null;
