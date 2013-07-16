@@ -345,10 +345,17 @@
 			}
 		  //PANEL
 			$( "#panel" ).on( 'swipedown', swipedownHandler );
+			$( "#viewPage" ).on( 'swipedown', swipedownHandler );
 			// Callback 
 			function swipedownHandler( event ) {
-				console.log('Panel swipe');
-				tooglePanel();
+				console.log('Panel hide');
+				hidePanel();
+			}
+			$( "#viewPage" ).on( 'swipeup', swipeupHandler );
+			// Callback 
+			function swipeupHandler( event ) {
+				console.log('Panel show');
+				showPanel();
 			}
 		});
 		function motion(flux){
