@@ -3,8 +3,14 @@
 				$.mobile.allowCrossDomainPages = true;
 				$.mobile.defaultPageTransition = "slide";
 				$.event.special.tap.tapholdThreshold=100;
-				    document.addEventListener("backbutton", function() { alert('EXIT');	}, false);
 		});
+		
+		document.addEventListener("deviceready", onDeviceReady, false);
+		
+		function onDeviceReady() {
+			// Register the event listener
+			document.addEventListener("backbutton", function() { alert('EXIT');	}, false);
+		}
 		
 		var play='off';
 		var ctx=null;
