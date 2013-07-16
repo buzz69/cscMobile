@@ -343,8 +343,9 @@
 					console.log("image loaded: ("+tmpIMG.src+")");
 					if(play=="on"){
 						ratio=this.width/this.height;
-						largeur=$('#fullview').width();
-						hauteur=Math.ceil($('#fullview').width()/ratio);
+						largeur=Math.ceil(window.innerWidth-(window.innerWidth/10));	//largeur ecran -10%
+						hauteur=Math.ceil(largeur/ratio);
+						$('#fullview').attr('width',largeur);
 						$('#fullview').attr('height',hauteur);
 						//$('#fullview').attr('src',tmpUrl);
 						console.log('source: '+this.width+'x'+this.height+' - destination: '+largeur+'x'+hauteur);
