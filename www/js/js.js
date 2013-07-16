@@ -11,7 +11,9 @@
 		
 		function onDeviceReady() {
 			// Register the event listener
-			document.addEventListener("backbutton", function() { showConfirm();	}, false);
+			document.addEventListener("backbutton", function() { 
+				$.mobile.changePage( "cameras.html", { transition: "slidedown"} );
+			}, false);
 		}
 		
 		function showConfirm() {
