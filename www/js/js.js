@@ -440,11 +440,11 @@
         $(window).resize(function(){
             wheight = $(window).height();
             changepush();
-			checkScreen();
+			//checkScreen();
         });
 
         function changepush(){
-            $('#contentbody').height(wheight-75);
+            $('#contentbody').height(wheight-80);
         }
 		
 		function controlCamera(id,cmd){
