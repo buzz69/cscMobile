@@ -138,7 +138,7 @@ function Camera(Cid,Cname,Cfunction,Clogin,Cpassword,Cprotocol,Ccontrollable,Cco
 						
 						if(Cpreset==FOSCAM_8918W_CONTROL_ID){
 							controlPanel+='<table width=90%><tr><td width=50% align=left valign=top>';
-							controlPanel+='<fieldset data-role="controlgroup" data-mini="true" style="max-width:150px">';
+							controlPanel+='<fieldset data-role="controlgroup" data-mini="true" style="max-width:120px">';
 							controlPanel+='<legend>Vidéo:</legend>';
 							controlPanel+='<input type="checkbox" class="checkbtn" name="flip" id="flipped" value="flip" onchange="tabCameras['+Cid+'].flipCamera()"/>';
 							controlPanel+='<label for="flipped">Flip</label>';

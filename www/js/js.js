@@ -10,9 +10,16 @@
 		}
 		
 		function onDeviceReady() {
+			check_network();
 			// Register the event listener
 			document.addEventListener("backbutton", function() { 
-				$.mobile.changePage( "cameras.html", { transition: "slidedown"} );
+				if($.mobile.activePage.attr("id") != "camlistPage"){
+					if($.mobile.activePage.attr("id") == "loginPage"){
+						showConfirm();
+					}else{
+						$.mobile.changePage( "cameras.html", { transition: "slide"} );
+					}
+				}
 			}, false);
 		}
 		
@@ -31,8 +38,25 @@
 			 }
   		}
 		
+		function check_network() {
+			var networkState = navigator.network.connection.type;
+
+			var states = {};
+			states[Connection.UNKNOWN]  = 'Unknown connection';
+			states[Connection.ETHERNET] = 'Ethernet connection';
+			states[Connection.WIFI]     = 'WiFi connection';
+			states[Connection.CELL_2G]  = 'Cell 2G connection';
+			states[Connection.CELL_3G]  = 'Cell 3G connection';
+			states[Connection.CELL_4G]  = 'Cell 4G connection';
+			states[Connection.NONE]     = 'No network connection';
+
+			alert('Connection type:\n ' + states[networkState]);
+		}
+		
 		var play='off';
 		var ctx=null;
+		
+		var motionInterval=100;	//délai d'affichage entre les images de la caméra
 		
 		var mobile=true;
 		var userTab=new Array();
@@ -376,14 +400,14 @@
 						//$('#fullview').attr('src',tmpUrl);
 						console.log('source: '+this.width+'x'+this.height+' - destination: '+largeur+'x'+hauteur);
 						ctx.drawImage(tmpIMG, 0, 0, this.width, this.height, 0, 0, largeur, hauteur);
-						setTimeout("motion('"+flux+"')",1000);
+						setTimeout("motion('"+flux+"')",motionInterval);
 						//motion();
 					}
 				};
 				tmpIMG.onerror=function(){
 					console.log("load error: ("+tmpIMG.src+")");
 					if(play=="on"){
-						setTimeout("motion('"+flux+"')",1000);
+						motion(flux);
 					}
 				};
 			}
