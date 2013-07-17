@@ -13,12 +13,10 @@
 			check_network();
 			// Register the event listener
 			document.addEventListener("backbutton", function() { 
-				if($.mobile.activePage.attr("id") != "camlistPage"){
-					if($.mobile.activePage.attr("id") == "loginPage"){
-						showConfirm();
-					}else{
-						$.mobile.changePage( "cameras.html", { transition: "slide"} );
-					}
+				if($.mobile.activePage.attr("id") == "camlistPage" || $.mobile.activePage.attr("id") == "loginPage"){
+					showConfirm();
+				}else{
+					$.mobile.changePage( "cameras.html", { transition: "slide"} );
 				}
 			}, false);
 		}
