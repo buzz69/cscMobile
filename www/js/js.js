@@ -351,7 +351,8 @@
 		//VIEW PAGE
 		$( '#viewPage' ).live( 'pageshow',function(event){
 			//alert(currentCamera['link']);
-			console.log("viewPage - start flux - showpanel");
+			tabCameras[currentCamera['id']].getPanel('panel');
+			console.log("viewPage - get panel - start flux - showpanel");
 			//$('#fullview').attr('src',currentCamera['link']);
 			$('#camName').html(currentCamera['name'].toUpperCase());
             wheight = $(window).height();
@@ -364,7 +365,6 @@
 		
 		$( '#viewPage' ).live( 'pagecreate',function(event){
 		  ctx = document.getElementById('fullview').getContext('2d');
-		  tabCameras[currentCamera['id']].getPanel('panel');
 		  //
 			$( "#viewPage" ).on( 'swiperight', swiperightHandler );
 			// Callback 
