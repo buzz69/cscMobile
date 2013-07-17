@@ -61,7 +61,7 @@
 		var play='off';
 		var ctx=null;
 		
-		var motionInterval=100;	//délai d'affichage entre les images de la caméra
+		var motionInterval=1000;	//délai d'affichage entre les images de la caméra
 		
 		var mobile=true;
 		var userTab=new Array();
