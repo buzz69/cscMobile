@@ -349,8 +349,7 @@
 		//VIEW PAGE
 		$( '#viewPage' ).live( 'pageshow',function(event){
 			//alert(currentCamera['link']);
-			tabCameras[currentCamera['id']].getPanel('panel');
-			console.log("viewPage - get panel - start flux - showpanel");
+			console.log("viewPage - start flux - showpanel");
 			//$('#fullview').attr('src',currentCamera['link']);
 			$('#camName').html(currentCamera['name'].toUpperCase());
             wheight = $(window).height();
@@ -362,8 +361,9 @@
 		});
 		
 		$( '#viewPage' ).live( 'pagecreate',function(event){
-		  ctx = document.getElementById('fullview').getContext('2d');
-		  //
+			tabCameras[currentCamera['id']].getPanel('panel');
+			ctx = document.getElementById('fullview').getContext('2d');
+			//
 			$( "#viewPage" ).on( 'swiperight', swiperightHandler );
 			// Callback 
 			function swiperightHandler( event ) {
