@@ -357,7 +357,7 @@
 			//checkScreen();
 			play='on';
 			motion(currentCamera['link']);
-			showPanel();
+			//showPanel();
 		});
 		
 		$( '#viewPage' ).live( 'pagecreate',function(event){

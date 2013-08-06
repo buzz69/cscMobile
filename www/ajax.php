@@ -28,6 +28,14 @@ $output=array();
 if($_GET['action']=='LOGIN'){
 	$login=$_GET['login'];
 	$pwd=$_GET['password'];
+	//
+	$pos = strrpos($login, "-");
+	if ($pos === false) {
+		die('AUTH ERROR');
+	}
+	$loginTab=explode('-',$login);
+	$userid=substr($loginTab[1], 3);
+	//
 		//connexion bdd
 			$liendb=mysql_connect($sqlserver,$sqluser,$sqlpass);
 			if(!$liendb){
@@ -37,7 +45,7 @@ if($_GET['action']=='LOGIN'){
 			mysql_select_db($bddnom);
 		//recherche du user
 			$table='users';
-			$sql='select * from '.$table.' WHERE email = "'.$login.'"';
+			$sql='select * from '.$table.' WHERE id = "'.$userid.'"';
 			$zmuser=mysql_query($sql);
 			$nblignes=mysql_num_rows($zmuser);
 			if($nblignes!=1){
@@ -46,7 +54,7 @@ if($_GET['action']=='LOGIN'){
 				$infosUser=mysql_fetch_array($zmuser);
 				$password=$infosUser['password'];
 				if($password==$pwd){
-					$output['result']='OK';
+					$resultat='OK';
 					$_SESSION['user']['name']=$login;
 					$_SESSION['user']['password']=$password;
 					$_SESSION['user']['langue']=$infosUser['langue'];
@@ -60,9 +68,10 @@ if($_GET['action']=='LOGIN'){
 					$_SESSION['user']['timezone']=$infosUser['timezone'];
 					$_SESSION['user']['pays']=$infosUser['pays'];
 				}else{
-					$output['result']='AUTH ERROR';
+					$resultat='AUTH ERROR';
 				}
 			}
+			$output['result']=$resultat;
 			
 		//ferme connexion sql
 			mysql_close($liendb);
@@ -84,6 +93,14 @@ if(!isset($_SESSION['user']['name'])) {	//si la session n'existe pas
 
 //on verifi le login
 	$login=$_SESSION['user']['name'];
+	//
+	$pos = strrpos($login, "-");
+	if ($pos === false) {
+		die('AUTH ERROR');
+	}
+	$loginTab=explode('-',$login);
+	$userid=substr($loginTab[1], 3);
+	//
 	//connexion bdd
 		$liendb=mysql_connect($sqlserver,$sqluser,$sqlpass);
 		if(!$liendb){
@@ -93,7 +110,7 @@ if(!isset($_SESSION['user']['name'])) {	//si la session n'existe pas
 		mysql_select_db($bddnom);
 	//recherche du user
 		$table='users';
-		$sql='select * from '.$table.' WHERE email = "'.$login.'"';
+		$sql='select * from '.$table.' WHERE id = "'.$userid.'"';
 		$zmuser=mysql_query($sql);
 		$nblignes=mysql_num_rows($zmuser);
 		if($nblignes!=1){
@@ -108,19 +125,6 @@ if(!isset($_SESSION['user']['name'])) {	//si la session n'existe pas
 	//ferme connexion sql
 		mysql_close($liendb);
 
-function generateAuthHash($nom,$pass,$secret){
-	$time = localtime();
-	$authKey = $secret.$nom.$pass.$time[2].$time[3].$time[4].$time[5];
-	$auth = md5( $authKey );
-	return( $auth );
-}
-	
-function getCamLink($user,$pass,$monitorId){
-	include('conf/main.conf');
-	$connkey=rand(1,999999);
-	$random=rand(1111111111,9999999999);
-	return('http://'.$monIP.'/cgi-bin/nph-zms?mode=jpeg&monitor='.$monitorId.'&scale=100&maxfps='.$maxfps.'&buffer=1000&auth='.generateAuthHash($user,$pass,$secret).'&connkey='.$connkey.'&rand='.$random);
-}
 
 function parseInt($string) {
 //	return intval($string);
@@ -171,8 +175,14 @@ $listeMois=array('Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout
 	$curDay=strftime("%d");		//jour sur 2 chiffres (ex: 01)
 
 if($action=='CHECK_LOGIN'){
-	//on verifi le login
 	$login=$_SESSION['user']['name'];
+	//
+	$pos = strrpos($login, "-");
+	if ($pos === false) {
+		die('AUTH ERROR');
+	}
+	$loginTab=explode('-',$login);
+	$userid=substr($loginTab[1], 3);
 	//connexion bdd
 		$liendb=mysql_connect($sqlserver,$sqluser,$sqlpass);
 		if(!$liendb){
@@ -182,7 +192,7 @@ if($action=='CHECK_LOGIN'){
 		mysql_select_db($bddnom);
 	//recherche du user
 		$table='users';
-		$sql='select * from '.$table.' WHERE email = "'.$login.'"';
+		$sql='select * from '.$table.' WHERE id = "'.$userid.'"';
 		$zmuser=mysql_query($sql);
 		$nblignes=mysql_num_rows($zmuser);
 		if($nblignes!=1){
@@ -206,6 +216,14 @@ if($action=='LOGOUT'){
 }
 
 if($action=='GET_USER_INFO'){
+	$login=$_SESSION['user']['name'];
+	//
+	$pos = strrpos($login, "-");
+	if ($pos === false) {
+		die('AUTH ERROR');
+	}
+	$loginTab=explode('-',$login);
+	$userid=substr($loginTab[1], 3);
 	//connexion bdd
 		$liendb=mysql_connect($sqlserver,$sqluser,$sqlpass);
 		if(!$liendb){
@@ -217,7 +235,7 @@ if($action=='GET_USER_INFO'){
 	//infos utilisateur cam
 		mysql_select_db($bddnom);
 		$table='users';
-		$sql='select * from '.$table.' WHERE email = "'.$_SESSION['user']['name'].'"';
+		$sql='select * from '.$table.' WHERE id = "'.$userid.'"';
 		$camuser=mysql_query($sql);
 		$infosUser=mysql_fetch_array($camuser);
 		$id=$infosUser['id'];
@@ -288,80 +306,16 @@ if($action=='GET_USER_INFO'){
 	die($_GET['callback'] .'('. json_encode($output) . ')');
 }
 
-if($action=='GET_DISK_USE'){
-	//connexion bdd
-		$liendb=mysql_connect($sqlserver,$sqluser,$sqlpass);
-		if(!$liendb){
-			systemLog('USER:'.$_SESSION['user']['name'].' - *** ERROR *** Echec de connexion a la base MYSQL. SERVER="'.$sqlserver.'" USER="'.$sqluser.'" PASS="'.$sqlpass.'"');
-			die($_GET['callback'] .'('. json_encode($errorSQL) . ')');
-		}
-		mysql_select_db($bddnom);
-	
-	//on recupere l'id du user et de ses cameras dans la base zm
-		$table='Users';
-		$sql='select * from '.$table.' WHERE Username = "'.$_SESSION['user']['name'].'"';
-		$zmuser=mysql_query($sql);
-		$id=mysql_result($zmuser,0,0);				//id
-		$monitorids=mysql_result($zmuser,0,12);		//id des cameras
-		$monitorsTab=explode(',',$monitorids);
-		
-	//on recupere la formule dans la base cam
-		mysql_select_db($bdd2nom);
-		$table='users';
-		$sql='select * from '.$table.' WHERE id = "'.$id.'"';
-		$camuser=mysql_query($sql);
-		$infosUser=mysql_fetch_array($camuser);
-		$userFormule=$infosUser['formule'];
-		
-	//on recupere la taille disque maxi
-		$table='formules';
-		$sql='select * from '.$table.' WHERE id = "'.$userFormule.'"';
-		$formule=mysql_query($sql);
-		$infosFormule=mysql_fetch_array($formule);
-		$formuleStorageLimit=$infosFormule['storage_limit'];
-	
-	//calcul de l'utilisation du disque pour chaque cameras
-		$diskUsed=0;
-		if($monitorids!=''){
-			$lst="";
-			for($x=0;$x<count($monitorsTab);$x++){
-				//$command='du -s '.$baseEventsDir.$monitorsTab[$x].'/ | cut -d"/" -f1';
-				//exec($command,$rep);
-				//$spaceUsed=intval($rep[0]);
-				//$diskUsed+=$spaceUsed;
-				$lst.=$baseEventsDir.$monitorsTab[$x]." ";
-			}
-			$command='du -s '.$lst.'| awk \'{print $1}\'';
-			exec($command,$rep);
-			for($y=0;$y<count($monitorsTab);$y++){
-				$diskUsed+=intval($rep[$y]);
-			}
-			$total=$diskUsed;
-			$diskUsed=format_taille($diskUsed*1024);
-		}else{
-			$diskUsed=0;
-		}
-	//calcul de l'espace dique maxi
-			$units='Mo';
-			if($formuleStorageLimit>=1024){
-				$formuleStorageLimit=floor($formuleStorageLimit/1024);
-				$units='Go';
-			}
-	//mise en forme des donnees
-		$output['status']="SUCCESS";
-		$output['storage']=array();
-		$output['storage']['limit']=$formuleStorageLimit.$units;
-		$output['storage']['used']=$diskUsed;
-
-	//ferme connexion sql
-		mysql_close($liendb);
-	
-	die($_GET['callback'] .'('. json_encode($output) . ')');
-}
-	
 if($action=='LOAD_CAMERAS'){
 	$output['camera']=array();
-	
+	$login=$_SESSION['user']['name'];
+	//
+	$pos = strrpos($login, "-");
+	if ($pos === false) {
+		die('AUTH ERROR');
+	}
+	$loginTab=explode('-',$login);
+	$userid=substr($loginTab[1], 3);
 	//connexion bdd
 		$liendb=mysql_connect($sqlserver,$sqluser,$sqlpass);
 		if(!$liendb){
@@ -372,7 +326,7 @@ if($action=='LOAD_CAMERAS'){
 	
 	//infos utilisateur
 		$table='users';
-		$sql='select * from '.$table.' WHERE email = "'.$_SESSION['user']['name'].'"';
+		$sql='select * from '.$table.' WHERE id = "'.$userid.'"';
 		$zmuser=mysql_query($sql);
 		$infosUser=mysql_fetch_array($zmuser);
 		$monitorids=$infosUser['cameras'];		//id des cameras
