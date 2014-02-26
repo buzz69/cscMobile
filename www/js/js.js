@@ -303,6 +303,10 @@
 			setTimeout("$('#popupInfos').popup('open')",500);
 		}
 		
+		if (/android/i.test(navigator.userAgent)) {
+		   //this is for phonegap in android
+		   jQuery('canvas').parent().css('overflow', 'visible');
+		}
 		window.onorientationchange=function(){	//detection du mode paysage
 			wheight = $(window).height();
             changepush();
