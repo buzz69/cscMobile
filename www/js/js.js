@@ -403,8 +403,8 @@
 						//$('#fullview').attr('src',tmpUrl);
 						console.log('source: '+this.width+'x'+this.height+' - destination: '+largeur+'x'+hauteur);
 						ctx.drawImage(tmpIMG, 0, 0, this.width, this.height, 0, 0, largeur, hauteur);
-						setTimeout("motion('"+flux+"')",motionInterval);
-						//motion();
+						//setTimeout("motion('"+flux+"')",motionInterval);
+						motion(flux);
 					}
 				};
 				tmpIMG.onerror=function(){
